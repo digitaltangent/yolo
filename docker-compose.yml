@@ -1,0 +1,29 @@
+version: "3"
+services:
+       yolo:
+           container_name: yolo
+           image: latest123/yolo
+           restart: unless-stopped
+           depends_on:
+              - mongo
+           build: .
+           ports:
+             - "7500:7500"
+           environment:
+              - CONNECTIONSTRING=mongodb://mongo:27017/yolomy   
+           networks:
+              - mongo-yolo-network
+       mongo:
+             container_name: mongo
+             image: mongo:latest
+             command: mongod --port 27017 --bind_ip_all
+             volumes:
+               - ./data:/data/db
+             ports:
+               - '27017:27017'
+             networks:
+               - mongo-yolo-network
+volumes:
+      data:
+networks:
+      mongo-yolo-network:               
