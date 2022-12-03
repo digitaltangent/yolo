@@ -1,18 +1,24 @@
-version: "3"
+version: "3.8"
 services:
-       yolo:
-           container_name: yolo
-           image: latest123/yolo
-           restart: unless-stopped
-           depends_on:
-              - mongo
-           build: .
-           ports:
-             - "7500:7500"
-           environment:
-              - CONNECTIONSTRING=mongodb://mongo:27017/yolomy   
+       client:
+           tty: true
+           build:
+            dockerfile: Dockerfile
+            context: ./client
            networks:
               - mongo-yolo-network
+       backend:
+           tty: true
+           depends_on:
+              - mongo
+           build:
+            dockerfile: Dockerfile
+            context: ./backend
+           environment:
+              - MONGODB_URI=mongodb://mongo
+           networks:
+              - mongo-yolo-network      
+            
        mongo:
              container_name: mongo
              image: mongo:latest
