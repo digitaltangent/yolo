@@ -7,7 +7,7 @@ WORKDIR "/client"
 COPY package*.json ./
 
 #get packages and make sure we only install what is required
-RUN npm install 
+RUN npm install --no-install-recommends
 
 #now we can copy all the src files we need
 COPY . .
