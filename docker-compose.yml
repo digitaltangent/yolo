@@ -19,12 +19,15 @@ services:
            environment:
               - MONGODB_URI=mongodb://mongo
            networks:
-              - mongo-yolo-network      
+              - mongo-yolo-network
+           ports:
+              - "3001:3001"         
             
        mongo:
              container_name: mongo
+             restart: always
              image: mongo:latest
-             command: mongod --port 27017 --bind_ip_all
+             command: mongod --port 27017
              volumes:
                - ./data:/data/db
              ports:
