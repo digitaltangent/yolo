@@ -2,7 +2,7 @@ version: "3.8"
 services:
        client:
            tty: true
-           image: aleedaf/yolo:client-1.0.0
+           image: aleedaf/yolo:client-1.1.0
            build:
             dockerfile: Dockerfile
             context: ./client
@@ -12,7 +12,7 @@ services:
               - "3000:3000"  
        backend:
            tty: true
-           image: aleedaf/yolo:backend-1.0.0
+           image: aleedaf/yolo:backend-1.1.0
            depends_on:
               - mongo
            build:

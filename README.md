@@ -1,23 +1,14 @@
-# Requirements
-Make sure that you have the following installed:
-- [node](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04) 
-- npm 
-- [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/) and start the mongodb service with `sudo service mongod start`
+# Description
+This project is an eCommerce application built  on the MERN stack and is used for the Devops IP #2
 
-## Navigate to the Client Folder 
- `cd client`
+## How to run the project with docker  
+Make sure you have docker installed
+Clone the project 
+Navigate to the folder where you cloned
+Open the terminal and type: 'docker compose up'
+The project will pull the required containers from Docker Hub and will set up your environment in a docker container
 
-## Run the folllowing command to install the dependencies 
- `npm install`
-
-## Run the folllowing to start the app
- `npm start`
-
-## Open a new terminal and run the same commands in the backend folder
- `cd ../backend`
-
- `npm install`
-
- `npm start`
-
- ### Go ahead a nd add a product (note that the price field only takes a numeric input)
+## Tagging and versioning
+aleedaf/yolo:client is the frontend client
+aleedaf/yolo:backend is the backend server
+The current version tag is 1.1.0

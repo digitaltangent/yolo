@@ -8,7 +8,7 @@ For the dockerfile, the directives that were used were basically to mimic the in
 I used a docker network because we have to run the different parts of the application (client, server, database) in one container and we want each part to be able to communicate with the others. In my docker-compose.yml I used the yaml structure to add the key-value pairs for networks and ports in each service. I also used the network mongo-yolo-network to create the bridge network for the container
 
 ## Docker-compose volume definition and usage (where necessary).
-The volume in the docker compose is used so that we can persist data. I added a volume named 'data' where any products that are created in my app can be stored and be persistent. 
+The volume in the docker compose is used so that we can persist data. I added a volume named 'data' where any products that are created in my app can be stored and be persistent. Keeping application data seperately also helps to keep image size lower.
 
 ## Git workflow used to achieve the task.
 My git workflow was to create successive branches as I added my dockerfiles and my dockercompose. I then committed regularly as I changed things and debugged the running of my application in the container. My docker compose file in my git repo will pull the images from docker hub and then run the dockerfiles to build the project. 
