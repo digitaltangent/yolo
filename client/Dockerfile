@@ -7,7 +7,7 @@ WORKDIR /client
 COPY package*.json ./
 
 #get packages and make sure we only install what is required
-RUN  npm install --legacy-peer-deps
+RUN  npm install --verbose
 
 #now we can copy all the src files we need
 COPY . .
