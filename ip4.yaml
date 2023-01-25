@@ -1,0 +1,139 @@
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: backend
+    labels:
+      app: backend
+  spec:
+    selector:
+      app: backend
+    ports:
+    - name: http
+      port: 3001
+      targetPort: 3001
+    type: ClusterIP
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+    selector:
+      matchLabels:
+        app: backend
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: backend
+      spec:
+        containers:
+        - name: backend
+          image: aleedaf/yolo:backend-1.2.3
+          ports:
+          - containerPort: 3001
+          env:
+          - name: MONGO_URL
+            value: mongodb://mongo:27017/yolomy
+---
+              apiVersion: v1
+              kind: Service
+              metadata:
+                name: client
+                labels:
+                  app: client
+              spec:
+                selector:
+                  app: client
+                ports:
+                - name: http
+                  port: 3000
+                  targetPort: 3000
+                type: ClusterIP
+              
+---
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: client
+            spec:
+                selector:
+                  matchLabels:
+                    app: client
+                replicas: 1
+                template:
+                  metadata:
+                    labels:
+                      app: client
+                  spec:
+                    containers:
+                    - name: client
+                      image: aleedaf/yolo:client-1.2.3
+                      ports:
+                      - containerPort: 3000
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: client-lb
+    labels:
+      app: client
+  spec:
+    selector:
+      app: client
+    ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+    type: LoadBalancer
+  
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: mongodb
+    labels:
+      app: mongodb
+  spec:
+    selector:
+      app: mongodb
+    ports:
+    - name: mongodb
+      port: 27017
+      targetPort: 27017
+    type: ClusterIP
+---
+  apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    name: mongodb
+  spec:
+    selector:
+      matchLabels:
+        app: mongodb
+    serviceName: mongodb
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: mongodb
+      spec:
+        containers:
+        - name: mongodb
+          image: mongo:latest
+          ports:
+          - containerPort: 27017
+          volumeMounts:
+          - name: mongodb-data
+            mountPath: /data/db
+    volumeClaimTemplates:
+    - metadata:
+        name: mongodb-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi
+  
